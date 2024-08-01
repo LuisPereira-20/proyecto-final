@@ -4,7 +4,7 @@ import Exhibicion from './components/exhibidor.jsx'
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <>
-    <div className='grid grid-cols-3, gap-4, w-96 h-96 p-4 bg-gray-200 place-items-center'>
+    <div class='grid grid-cols-4 (0,1fr) gap-8 p-4 bg-gray-200'>
     <Exhibicion />
     <Exhibicion />
     <Exhibicion />
