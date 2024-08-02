@@ -2,7 +2,9 @@ import bcrypt from "bcrypt";
 import Usuario from "../Model/modelo_usuario.js";
 import rol from "../Model/modelo_rol.js";
 import regex from "../Tools/validacion.js";
-import opciones from "../Tools/opciones.js";
+import opciones from "../Tools/opciones.js"; 
+const multer = require('multer');
+const upload = multer({dest : 'uploads/'});
 
 export const getUsuarios = async (req, res) => {
     try {
