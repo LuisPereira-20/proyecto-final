@@ -53,7 +53,8 @@ const usuarioSchema = new Schema({
     rol : {type: Schema.Types.ObjectId, ref: 'Rol', default: null},
     
     imagen: {
-        type : Array,
+        type : String,
+        default : null
         
     },
     fechaCreacion: {
@@ -91,3 +92,5 @@ const Usuario = mongoose.model('Usuario', usuarioSchema);
 Usuario.paginate().then({});
 
 export default Usuario
+
+

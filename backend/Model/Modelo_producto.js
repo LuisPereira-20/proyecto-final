@@ -62,9 +62,11 @@ const productoSchema = new Schema({
         required : true,
         minLength : 2,
         maxLength : 500,
-        match : validacion.description},
+        match : validacion.descripcion
+    },
     categoria : {
-        type : Schema.Types.ObjectId,ref: 'categoria', default: null
+        type : Schema.Types.ObjectId,
+        ref: 'Categorias'
     },
     descuento : {
         type : Number,

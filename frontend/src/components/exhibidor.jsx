@@ -1,10 +1,17 @@
-function Exhibicion() {
-    return(
-    <div id="exhibidor"
-    class="bg-blue-400 rounded-xl h-24px w-36px p-4 gap-4 grid place-items-center my-5" >
-        <p className="text-2xl">Producto</p>
-        <button id="añadir" className="bg-gray-200 rounded-xl h-4px w-12px p-2 hover:bg-gray-400">Añadir</button>
-    </div>
-    )
+import { Link } from "react-router-dom";
+
+function Exhibicion({event = () => {}}) {
+    return (
+    <Link to = "producto">
+            <div id="exhibidor"
+            class="bg-blue-400  w-full h-32 rounded-xl p-4 gap-4 flex flex-col my-2 mx-2 max-md:fit">
+            <p className="text-2xl place-self-center text-center">Producto</p>
+            <div className="place-self-center">
+            <button className="bg-gray-200 rounded-xl h-10 w-24 p-2 font-bold text-center hover:bg-gray-400" event={() => {}}>Añadir</button>
+            </div>
+            </div>
+            </Link>
+            
+        )
 }
 export default Exhibicion;
