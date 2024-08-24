@@ -1,5 +1,5 @@
 import { useState } from "react";
-function Producto({ producto }) {
+function Product({ producto }) {
     const [carrito, setCarrito] = useState(() => {
         const carritoGuardado = localStorage.getItem('carrito');
         return carritoGuardado ? JSON.parse(carritoGuardado) : [];
@@ -18,4 +18,4 @@ function Producto({ producto }) {
       </div>
     );
   }
-  export default Producto;
+  export default Product;

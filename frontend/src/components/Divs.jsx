@@ -1,10 +1,10 @@
-import Producto from "./button";
+import Product from "./button.jsx"
 
 function Div () {
     return(
         <div>
             <h1>Producto</h1>
-            <Producto />
+            <Product />
         </div>
     )
 }
