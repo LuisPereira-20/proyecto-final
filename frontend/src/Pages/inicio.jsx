@@ -5,8 +5,9 @@ function Inicio () {
     return(
         <>
         <Nav />
-        <div>
-            <h1>Inicio</h1>
+        <h1 className="text-xl text-center my-4">Inicio</h1>
+        <div className="bg-blue-400 h-32 w-fit p-8 my-4">
+            
             <Producto />
         </div>
 

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Inicio from "./Pages/inicio.jsx"
 import Products from "./Pages/Products.jsx"
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
@@ -11,5 +12,5 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="productos" element={<Products/>} />
       </Routes>
     </BrowserRouter>
-  </React.StrictMode>,
+  </React.StrictMode>
 )
