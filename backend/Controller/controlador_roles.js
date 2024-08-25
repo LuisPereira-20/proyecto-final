@@ -47,7 +47,7 @@ export const editarRol = async (req, res) => {
         const rol = await Rol.findByIdAndUpdate({ _id : req.params.id, eliminado : false},
             req.body, 
             {new : true});
-        const Rol_paginate = await Rol.paginate({id : req.params.id, eliminado : false}, opciones);
+        const Rol_paginate = await Rol.paginate({_id : rol.id, eliminado : false}, opciones);
         res.status(200).json(Rol_paginate);
         console.log(Rol_paginate);
     } catch (error) {

@@ -45,7 +45,7 @@ export const editarCategoria = async (req, res) => {
             return res.status(400).json({ error : "El nombre no es valido" });
         }
         const categoria = await Categorias.findByIdAndUpdate({ _id : req.params.id, eliminado : false}, req.body, {new : true});
-        const categoria_paginate = await Categorias.paginate({id : req.params.id, eliminado : false}, opciones);
+        const categoria_paginate = await Categorias.paginate({id : categoria.id, eliminado : false}, opciones);
         res.status(200).json(categoria_paginate);
     } catch (error) {
         console.log(error);

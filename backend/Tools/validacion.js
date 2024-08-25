@@ -14,7 +14,7 @@ regex.contraseña = new RegExp(regex.password, "i")
 
 const validar = (data) => {
     if (!regex.name.test(data.name) || !regex.apellido.test(data.apellido)
-        || !regex.description.test(data.description) 
+        || !regex.descripcion.test(data.descripcion) 
     || !regex.email.test(data.email) || !regex.contraseña.test(data.password))
     {
         return false;

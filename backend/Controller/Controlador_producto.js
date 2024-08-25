@@ -102,7 +102,7 @@ export const eliminarProducto = async (req, res) => {
         const Producto = await producto.findByIdAndUpdate({ _id : req.params.id, eliminado : false},
             {eliminado : true, fechaEliminacion : Date.now()}, 
             {new : true});
-        const producto_paginate = await producto.paginate({_id : producto._id, eliminado : false}, opciones);
+        const producto_paginate = await producto.paginate({_id : Producto._id, eliminado : false}, opciones);
         res.status(200).json(producto_paginate);
     } catch (error) {
         console.log(error);
