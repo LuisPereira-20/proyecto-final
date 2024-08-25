@@ -17,7 +17,7 @@ Un Usuario tiene los siguientes atributos:
 
 import mongoose from "mongoose";
 import mongoosePaginate from "mongoose-paginate-v2";
-import validacion from "../Tools/validacion.js";
+import regex from "../Tools/validacion.js";
 const Schema = mongoose.Schema;
 
 const usuarioSchema = new Schema({
@@ -26,20 +26,20 @@ const usuarioSchema = new Schema({
         required : true,
         minLength : 3,
         maxLength : 50,
-        match : validacion.nombre
+        match : regex.nombre
     },
     apellido : {
         type : String,
         required : true,
         minLength : 3,
         maxLength : 50,
-        match : validacion.apellido
+        match : regex.apellido
     },
     correo : {
         type : String,
         required : true,
         unique : true,
-        match : validacion.correo
+        match : regex.correo
     },
     contraseña : {
         type : String,
@@ -50,7 +50,7 @@ const usuarioSchema = new Schema({
         type : String,
         required : true
     },
-    rol : {type: Schema.Types.ObjectId, ref: 'Rol', default: null},
+    rol : {type: Schema.Types.ObjectId, ref:'Rol', default: null},
     
     imagen: {
         type : Array,
@@ -76,7 +76,7 @@ const usuarioSchema = new Schema({
         default : false
     },
     compras: {
-        type : [Schema.Types.ObjectId], ref: 'Compras',
+        type : [Schema.Types.ObjectId], ref:'Compra',
         default : [],
     },
     carrito: {

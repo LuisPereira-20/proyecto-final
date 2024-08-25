@@ -9,7 +9,7 @@ una categoria tiene los siguientes atributos:
 
 import mongoose from "mongoose";
 import mongoosePaginate from "mongoose-paginate-v2";
-import validacion from "../Tools/validacion.js";
+import regex from "../Tools/validacion.js";
 const Schema = mongoose.Schema;
 
 const categoriaSchema = new Schema({
@@ -18,7 +18,7 @@ const categoriaSchema = new Schema({
         required : true,
         minLength : 2,
         maxLength : 50,
-        match : validacion.nombre
+        match : regex.nombre
     },
     fechaCreacion : {
         type : Date,

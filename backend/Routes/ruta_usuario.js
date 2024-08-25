@@ -1,12 +1,12 @@
-import  router from 'express';
-const User  = router();   
+import  {Router} from 'express';
+const router  = Router();   
 
-import { getUsuarios, getUsuario, postUsuario, Actualizar_Usuario, Eliminar_Usuario} from "../Controller/Controlador_usuario.js";
+import { getUsuarios, getUsuario, postUsuario, Actualizar_Usuario, Eliminar_Usuario, submitImg} from "../Controller/Controlador_usuario.js";
+router.get("/usuarios",  getUsuarios);
+router.get("/usuarios/:id",  getUsuario);
+router.post("/usuarios",  postUsuario);
+router.patch("/usuarios/:id",  Actualizar_Usuario);
+router.patch("/usuarios/Img/:id", upload.single("imagen"),  submitImg);
+router.delete("/usuarios/:id",  Eliminar_Usuario);
 
-User.get("/usuarios",  getUsuarios);
-User.get("/usuarios/:id",  getUsuario);
-User.post("/usuarios",  postUsuario);
-User.patch("/usuarios/:id",  Actualizar_Usuario);
-User.delete("/usuarios/:id",  Eliminar_Usuario);
-
-export default User
+export default router

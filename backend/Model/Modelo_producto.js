@@ -15,7 +15,7 @@ un producto tiene los siguientes atributos:
 
 import mongoose from "mongoose";
 import mongoosePaginate from "mongoose-paginate-v2";
-import validacion from "../Tools/validacion.js";
+import regex from "../Tools/validacion.js";
 const Schema = mongoose.Schema;
 
 const productoSchema = new Schema({
@@ -24,7 +24,7 @@ const productoSchema = new Schema({
         required : true,
         minLength : 2,
         maxLength : 50,
-        match : validacion.nombre
+        match : regex.nombre
     },
     precio : {
         type : Number,
@@ -39,7 +39,10 @@ const productoSchema = new Schema({
         max : 1000000
     },
     imagen : {
-        type: Array
+        type: [String],
+        default: [],
+        minLength : 1,
+        maxLength : 5
     },
     fechaCreacion : {
         type : Date,
@@ -62,9 +65,9 @@ const productoSchema = new Schema({
         required : true,
         minLength : 2,
         maxLength : 500,
-        match : validacion.description},
+        match : regex.description},
     categoria : {
-        type : Schema.Types.ObjectId,ref: 'categoria', default: null
+        type : Schema.Types.ObjectId, ref:'Categorias', default: null
     },
     descuento : {
         type : Number,
@@ -75,8 +78,8 @@ const productoSchema = new Schema({
 
 productoSchema.plugin(mongoosePaginate);
 
-const Producto = mongoose.model("producto", productoSchema);
+const producto = mongoose.model("producto", productoSchema);
 
-Producto.paginate().then({});   
+producto.paginate().then({});   
 
-export default Producto;
+export default producto;
