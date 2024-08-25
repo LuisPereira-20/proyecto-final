@@ -1,4 +1,16 @@
 import  {Router} from 'express';
+import multer from 'multer';
+const guardar = multer.diskStorage({
+    destination: function (req, file, cb)  {
+        cb(null, 'uploads')
+    },
+    filename: function (req, file, cb)  {
+        const uniconombre = Date.now() + '-' + file.originalname;
+        cb(null, uniconombre);
+    },
+});
+
+const upload = multer({ storage, limits: {files: 1} });
 const router  = Router();   
 
 import { getUsuarios, getUsuario, postUsuario, Actualizar_Usuario, Eliminar_Usuario, submitImg} from "../Controller/Controlador_usuario.js";
