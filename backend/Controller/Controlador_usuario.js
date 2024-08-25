@@ -66,17 +66,18 @@ export const postUsuario = async (req, res) => {
             try {
                 console.log(req.file);
                     if(req.file === undefined){
-                return res.status(500).json({message: "image not found"});
+                return res.status(400).json({message: "imagen no encontrada"});
                 }
             if(req.file.mimetype !== "image/png" && req.file.mimetype !== "image/jpg" && req.file.mimetype !== "image/jpeg"){
-                return res.status(500).json({message: `image, ${req.file.filename}, not valid, only png, jpg and jpeg allowed`});
+                return res.status(400).json({message: `image, ${req.file.filename}, no es valida, solamente png, jpg y jpeg`});
                 }
             if(req.file.size > 5000000 || req.file.size === 0){
-                return res.status(500).json({message: `image, ${req.file.filename}, not valid, max 5MB allowed and not empty`});
+                return res.status(400).json({message: `image, ${req.file.filename}, no es valida, el tamaño maximo es 5mb y no debe estar vacio`});
                 }
-                const user = await User.findByIdAndUpdate({_id: req.params.id, deleted: false}, {image: req.file.path}, {new: true});
-                const paginatedUser = await Usuario.paginate({deleted: false, _id: user._id}, options);
-                return res.status(201).json(paginatedUser);
+                const usuario = await User.findByIdAndUpdate({_id: req.params.id, eliminado: false},
+                    {image: req.file.path}, {new: true});
+                const paginatedUsuario = await Usuario.paginate({eliminado: false, _id: Usuario._id}, opciones);
+                return res.status(201).json(paginatedUsuario);
             } catch (error) {
                 console.log(error);
                 res.status(500).json({ message: error.message });

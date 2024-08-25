@@ -42,23 +42,28 @@ export const editarRol = async (req, res) => {
     try{
         req.body.fechaActualizacion = Date.now();
         if (!regex.nombre.test(req.body.nombre)){
-            return res.status(500).json({ error : "El nombre no es valido" });
+            return res.status(400).json({ error : "El nombre no es valido" });
         }
-        const rol = await rol.findByIdAndUpdate({ _id : req.params.id, eliminado : false}, req.body, {new : true});
-        const Rol_paginate = await rol.paginate({id : req.params.id, eliminado : false}, opciones);
+        const rol = await Rol.findByIdAndUpdate({ _id : req.params.id, eliminado : false},
+            req.body, 
+            {new : true});
+        const Rol_paginate = await Rol.paginate({id : req.params.id, eliminado : false}, opciones);
         res.status(200).json(Rol_paginate);
+        console.log(Rol_paginate);
     } catch (error) {
-        res.status(404).json({ error : error.message});
+        console.log(error);
+        res.status(500).json({ message: error.message});
     }
 }
 
 export const deleteRol = async (req, res) => {
     try{
-        req.body.eliminado = true;
-        const rol = await rol.findByIdAndUpdate({ _id : req.params.id, eliminado : false}, {eliminado : true, fechaEliminacion : Date.now()}, {new : true});
-        const rol_paginate = await rol.paginate({id : req.params.id, eliminado : false}, opciones);
-        res.status(200).json(rol_paginate);
+        const rol = await Rol.findByIdAndUpdate({ _id : req.params.id, eliminado : false},
+            {eliminado : true, fechaEliminacion : Date.now()},
+            {new : true});
+        res.status(201).json(rol);
     } catch (error) {
-        res.status(404).json({ error : error.message});
+        console.log(error);
+        res.status(500).json({ message: error.message});
     }
 }
