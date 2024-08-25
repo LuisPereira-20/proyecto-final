@@ -62,3 +62,11 @@ export const getComprasId = async (req, res) => {
         res.status(404).json({ error: error.message });
     }
 }
+
+const chequeoProductos = async (array) => {
+    const soloIDs = array.map((obj) => obj._id);
+    const records = await producto.find({ '_id': { $in: soloIDs } });
+    if (!records.length || records.length !== soloIDs.length) {
+      return "Product or products not found, check IDs";
+    }
+}
