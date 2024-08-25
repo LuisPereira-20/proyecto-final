@@ -21,7 +21,10 @@ const compraSchema = new Schema({
         required : true
     },
     productos : {
-        type : [Schema.Types.ObjectId], 
+        type : [{_id : {type : Schema.Types.ObjectId, ref : 'Producto'},
+            cantidad : {type : Number, required : true, min : 0}
+        }
+    ], 
         ref : 'Producto', 
         required : true
     },
