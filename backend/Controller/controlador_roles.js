@@ -1,37 +1,40 @@
 import regex from "../Tools/validacion.js";
 import opciones from "../Tools/opciones.js";
-import rol from "../Model/modelo_rol.js";
+import Rol from "../Model/modelo_rol.js";
 
 export const getRoles = async (req, res) => {
     try {
-        opciones.page = numero(req.query.page) || 1;
-        opciones.limit = numero(req.query.limit) || 2;
-        const Roles = await rol.paginate({eliminado : false} , opciones);
+        opciones.page = (req.query.page) || 1;
+        opciones.limit = (req.query.limit) || 2;
+        const Roles = await Rol.paginate({eliminado : false} , opciones);
         res.status(200).json(Roles);
     } catch (error) {
-        res.status(404).json({ error : error.message});
+        console.log(error);
+        res.status(500).json({ message : error.message});
     }
 }
 
 export const getRol = async (req, res) => {
     try {
-    const role = await rol.paginate({id : req.params.id, eliminado : false}, opciones);
+    const role = await Rol.paginate({_id: req.params.id, eliminado: false}, opciones);
     res.status(200).json(role);
 } catch (error) {
-    res.status(404).json({ error : error.message});
+    console.log(error);
+    res.status(500).json({ error : error.message});
 }
 }
 
 export const postRol = async (req, res) => {
     try { 
         if (!regex.nombre.test(req.body.nombre)){
-            return res.status(500) .json({ error : "El nombre no es valido" });
+            return res.status(400) .json({ error : "El nombre no es valido" });
         }
-        const role = new rol(req.body);
-        await rol.save();
+        const role = new Rol(req.body);
+        await Rol.save();
         res.status(200).json(role);
     } catch (error) {
-        res.status(404).json({ error : error.message});
+        console.log(error);
+        res.status(500).json({ message: error.message});
     }
 }
 
