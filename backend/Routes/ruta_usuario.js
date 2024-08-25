@@ -10,7 +10,7 @@ const guardar = multer.diskStorage({
     },
 });
 
-const upload = multer({ storage, limits: {files: 1} });
+const upload = multer({ storage: guardar, limits: {files: 1} });
 const router  = Router();   
 
 import { getUsuarios, getUsuario, postUsuario, Actualizar_Usuario, Eliminar_Usuario, submitImg} from "../Controller/Controlador_usuario.js";
