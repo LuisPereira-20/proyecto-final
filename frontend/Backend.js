@@ -1,7 +1,5 @@
-import axios from "axios";
-
-const API = axios.create({baseURL : "http://localhost:3001",
-    
-});
-
-export default API
+const app = {
+    backend: "https://zk57wgcm-3001.use2.devtunnels.ms/",
+    frontend: "https://vc881pxr-5173.use2.devtunnels.ms",
+  }
+  

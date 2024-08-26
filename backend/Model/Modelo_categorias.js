@@ -6,12 +6,11 @@ una categoria tiene los siguientes atributos:
     -Fecha de eliminacion (default: null)
     -Eliminado (default: false, boleano)
 */
-
 import mongoose from "mongoose";
 import mongoosePaginate from "mongoose-paginate-v2";
-import regex from "../Tools/validacion.js";
+import { regex, validar } from "../Tools/validacion.js";
+import InformacionUsuario from "../Tools/Informacion_usuario.js";
 const Schema = mongoose.Schema;
-
 const categoriaSchema = new Schema({
     nombre : {
         type : String,
@@ -22,7 +21,8 @@ const categoriaSchema = new Schema({
     },
     fechaCreacion : {
         type : Date,
-        default : Date.now
+        default : Date.now,
+        Inmutable : true
     },
     fechaActualizacion : {
         type : Date,
@@ -37,11 +37,7 @@ const categoriaSchema = new Schema({
         default : false
     }
 });
-
 categoriaSchema.plugin(mongoosePaginate);
-
 const Categorias = mongoose.model("Categorias", categoriaSchema);
-
 Categorias.paginate().then({});
-
 export default Categorias;

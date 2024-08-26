@@ -9,11 +9,9 @@ una compra tiene los siguientes atributos:
     -Fecha de eliminacion
     -Eliminado
 */
-
 import mongoose from "mongoose";
 import mongoosePaginate from "mongoose-paginate-v2";
 const Schema = mongoose.Schema;
-
 const compraSchema = new Schema({
     usuario : {
         type : Schema.Types.ObjectId,
@@ -50,11 +48,7 @@ const compraSchema = new Schema({
         default : false
     }
 });
-
 compraSchema.plugin(mongoosePaginate);
-
 const Compra = mongoose.model("Compra", compraSchema);
-
 Compra.paginate().then({});
-
 export default Compra;

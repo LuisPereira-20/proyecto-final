@@ -6,12 +6,10 @@ un rol tiene los siguientes atributos:
     -Fecha de eliminacion (default: null)
     -Eliminado (default: false, boleano)
 */
-
 import mongoose from "mongoose";
 import mongoosePaginate from "mongoose-paginate-v2";
-import regex from "../Tools/validacion.js";
+import { regex, validar } from "../Tools/validacion.js";
 const Schema = mongoose.Schema;
-
 const rolSchema = new Schema({
     nombre : {
         type : String,
@@ -37,11 +35,7 @@ const rolSchema = new Schema({
         default : false
     }
 });
-
 rolSchema.plugin(mongoosePaginate);
-
 const Rol = mongoose.model("Rol", rolSchema);
-
 Rol.paginate().then({});
-
 export default Rol;

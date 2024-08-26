@@ -14,12 +14,13 @@ Un Usuario tiene los siguientes atributos:
     -Compras
     -Carrito de compras
 */
-
 import mongoose from "mongoose";
 import mongoosePaginate from "mongoose-paginate-v2";
-import regex from "../Tools/validacion.js";
+import { regex, validar } from "../Tools/validacion.js";
+import { generarToken, RefreshToken } from "../Authentication/generar.js";
+import autenticacion from "./Modelo_Autenticacion.js";
+import InformacionUsuario from "../Tools/Informacion_usuario.js";
 const Schema = mongoose.Schema;
-
 const usuarioSchema = new Schema({
     nombre : {
         type : String,
@@ -44,7 +45,7 @@ const usuarioSchema = new Schema({
     contraseña : {
         type : String,
         required : true,
-        maxLength : 20
+        maxLength : 200
     },
     telefono : {
         type : String,
@@ -58,17 +59,15 @@ const usuarioSchema = new Schema({
     },
     fechaCreacion: {
         type : Date,
-        required : true,
-        default : Date.now
+        default : Date.now,
+        inmutable : true
     },
     fechaActualizacion: {
         type : Date,
-        required : true,
         default : Date.now
     },
     fechaEliminacion: {
         type : Date,
-        required : true,
         default : null
     },
     eliminado: {
@@ -86,8 +85,18 @@ const usuarioSchema = new Schema({
 });
 usuarioSchema.plugin(mongoosePaginate);
 
+usuarioSchema.methods.crearAccesoToken = function () {
+    return generarToken(InformacionUsuario(this));
+  };
+    usuarioSchema.methods.createRefreshToken = async function () {
+    const refreshToken = RefreshToken(InformacionUsuario(this));
+    try {
+        await new autenticacion({ token: refreshToken }).save();
+    } catch (error) {
+        console.log(error);
+    }
+    return refreshToken;
+    };
 const Usuario = mongoose.model('Usuario', usuarioSchema);
-
 Usuario.paginate().then({});
-
 export default Usuario

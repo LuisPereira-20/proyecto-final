@@ -1,6 +1,6 @@
 import producto from "../Model/Modelo_producto.js";
 import Categorias from "../Model/Modelo_categorias.js";
-import regex from "../Tools/validacion.js";
+import {regex, validar} from "../Tools/validacion.js";
 import opciones from "../Tools/opciones.js";
 
 export const getProductos = async (req, res) => {
@@ -26,6 +26,7 @@ export const getProducto = async (req, res) => {
 
 export const postProducto = async (req, res) => {
     try {
+        console.log(req.body);
         if (!regex.nombre.test(req.body.nombre)){
             return res.status(500) .json({ error : "El nombre no es valido" });
         }
@@ -33,12 +34,15 @@ export const postProducto = async (req, res) => {
         if  (!regex.descripcion.test(req.body.descripcion)){
             return res.status(500) .json({ error : "La descripcio no es valida" });
         }
-        const categoria_Existente = await Categorias.findById(req.body.Categorias);
-        if (!categoria_Existente){
+        console.log(req.body.categoria);
+        const categoria_Existente = await Categorias.findById(req.body.categoria);
+       if (!categoria_Existente){
             return res.status(404).json({ error : "La categoria no existe" });
-        }
-        const Producto= new producto(req.body);
-        await Producto.save();
+       }
+       req.body.categoria = categoria_Existente._id;
+
+        const Product= new producto(req.body);
+        await Product.save();
         const paginated = await producto.paginate({id : producto._id, eliminado : false}, opciones);
         res.status(200).json(paginated);} 
         catch (error) {

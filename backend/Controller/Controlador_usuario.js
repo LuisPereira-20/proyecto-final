@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import Usuario from "../Model/modelo_usuario.js";
 import Rol from "../Model/modelo_rol.js";
-import regex from "../Tools/validacion.js";
+import {regex, validar} from "../Tools/validacion.js";
 import opciones from "../Tools/opciones.js"; 
 
 export const getUsuarios = async (req, res) => {
@@ -25,43 +25,28 @@ export const getUsuario = async (req, res) => {
         res.status(500).json({ message: error.message});
     }
 }
-
-export const postUsuario = async (req, res) => {
-    try {
-        if (!regex.nombre.test(req.body.nombre)){
-            return res.status(400) .json({ error : "El nombre no es valido" });
+        export const postUsuario = async (req, res) => {
+            try {
+                console.log(req.body);
+                const salt = await bcrypt.genSalt(10);
+                req.body.contraseña = await bcrypt.hash(req.body.contraseña, salt);
+                
+                const roles = await Rol.findById(req.body.rol);
+                if (!roles) {
+                    return res.status(400).json({ error: "El rol no existe" });
+                }
+                req.body.rol = roles._id;
+        
+                const usuario = new Usuario(req.body);
+                await usuario.save();
+                const Pagina_Usuario = await Usuario.paginate({_id: usuario._id, eliminado: false}, opciones);
+                res.status(200).json(Pagina_Usuario);
+            } 
+            catch (error) {
+                console.log(error);
+                res.status(500).json({ message: error.message });
+            }
         }
-            
-        if  (!regex.apellido.test(req.body.apellido)){
-            return res.status(400) .json({ error : "El apellido no es valido" });
-        }
-
-        if (!regex.correo.test(req.body.correo)){
-            return res.status(400) .json({ error : "El correo no es valido" });
-        }   
-
-        if (!regex.contraseña.test(req.body.contraseña)){
-            return res.status(400) .json({ error : "La contraseña no es valida" });
-        }
-
-        const salt = await bcrypt.genSalt(10);
-        req.body.contraseña = await bcrypt.hash(req.body.contraseña, salt);
-        //const verificado = bcrypt.compareSync(Usuarioentercontraseña, contraseñahash);
-        const roles = await Rol.findById(req.body.Rol);
-        if (!roles){
-            return res.status(400).json({ error : "El rol no existe" });
-        }
-        req.body.Rol = Rol._id;
-
-        const usuario = new Usuario(req.body);
-        await usuario.save();
-        const Pagina_Usuario = await Usuario.paginate({_id : usuario._id, eliminado : false}, opciones);
-        res.status(200).json(Pagina_Usuario);} 
-        catch (error) {
-        console.log(error);
-        res.status(500).json({ message: error.message});
-        }
-    }
 
         export const submitImg = async (req, res) => {
             try {

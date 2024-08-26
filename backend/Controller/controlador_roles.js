@@ -1,4 +1,4 @@
-import regex from "../Tools/validacion.js";
+import {regex, validar} from "../Tools/validacion.js";
 import opciones from "../Tools/opciones.js";
 import Rol from "../Model/modelo_rol.js";
 

@@ -1,11 +1,11 @@
-import regex from "../Tools/validacion.js";
+import {regex, validar} from "../Tools/validacion.js";
 import opciones from "../Tools/opciones.js";
 import Categorias from "../Model/Modelo_categorias.js";
 
 export const getCategorias = async (req, res) => {
     try {
-        opciones.page = numero(req.query.page) || 1;
-        opciones.limit = numero(req.query.limit) || 12;
+        opciones.page = (req.query.page) || 1;
+        opciones.limit = (req.query.limit) || 12;
         const categoria = await Categorias.paginate({eliminado : false} , opciones);
         res.status(200).json(categoria);
     } catch (error) {

@@ -1,6 +1,6 @@
 const opciones = {
     page : 1,
-    limit : 12,
+    limit : 20,
     collation : { locale : 'es' },
 }
 
