@@ -86,14 +86,7 @@ export const editarProducto = async (req, res) => {
     if  (!regex.descripcion.test(req.body.descripcion)){
         return res.status(400).json({ error : "La descripcion no es valida" });
     }
-    const categoria_Existente = await Categorias.findById(req.body.Categorias);
-    if (!categoria_Existente){
-        return res.status(404).json({ error : "La categoria no existe" });
-    }
-    const Producto = await producto.findByIdAndUpdate({ _id : req.params.id, eliminado : false},
-        req.body, 
-        {new : true});
-    const producto_paginate = await producto.paginate({id : req.params.id, eliminado : false}, opciones);
+    const producto_paginate = await producto.paginate({_id : req.params.id, eliminado : false}, opciones);
     res.status(200).json(producto_paginate);
     } catch (error) {
         console.log(error);

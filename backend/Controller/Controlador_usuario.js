@@ -81,7 +81,7 @@ export const getUsuario = async (req, res) => {
                 if (!regex.correo.test(req.body.correo)){
                     return res.status(400) .json({ error : "El correo no es valido" });
                 }
-                const usuario = await Usuario.findByIdandUpdate({ _id : req.params.id, deleted : false}, req.body, {new : true});
+                const usuario = await Usuario.findByIdAndUpdate({ _id : req.params.id, deleted : false}, req.body, {new : true});
                 const Pagina_Usuario = await Usuario.paginate({id : usuario._id, eliminado : false}, opciones);
                 return res.status(200).json(Pagina_Usuario);
             } catch (error) {
@@ -92,7 +92,7 @@ export const getUsuario = async (req, res) => {
             
             export const Eliminar_Usuario = async (req, res) => {
                 try {
-                    const usuario = await Usuario.findByIdandUpdate({ _id : req.params.id, deleted : true},
+                    const usuario = await Usuario.findByIdAndUpdate({ _id : req.params.id, deleted : true},
                         {deleted : true, fechaEliminacion : Date.now()},
                         {new : true});
                     const Pagina_Usuario = await Usuario.paginate({id : usuario._id, eliminado : false}, opciones);

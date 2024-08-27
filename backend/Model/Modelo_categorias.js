@@ -17,7 +17,8 @@ const categoriaSchema = new Schema({
         required : true,
         minLength : 2,
         maxLength : 50,
-        match : regex.nombre
+        match : regex.nombre,
+        inmutable : true
     },
     fechaCreacion : {
         type : Date,
