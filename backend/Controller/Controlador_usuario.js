@@ -19,6 +19,7 @@ export const getUsuarios = async (req, res) => {
 export const getUsuario = async (req, res) => {
     try {
         const usuario = await Usuario.paginate({id : req.params.id, eliminado : false}, opciones);
+        console.log(req.params.id);
         res.status(200).json(usuario);
     } catch (error) {
         console.log(error);
@@ -30,13 +31,11 @@ export const getUsuario = async (req, res) => {
                 console.log(req.body);
                 const salt = await bcrypt.genSalt(10);
                 req.body.contraseña = await bcrypt.hash(req.body.contraseña, salt);
-                
                 const roles = await Rol.findById(req.body.rol);
                 if (!roles) {
                     return res.status(400).json({ error: "El rol no existe" });
                 }
                 req.body.rol = roles._id;
-        
                 const usuario = new Usuario(req.body);
                 await usuario.save();
                 const Pagina_Usuario = await Usuario.paginate({_id: usuario._id, eliminado: false}, opciones);
@@ -47,7 +46,6 @@ export const getUsuario = async (req, res) => {
                 res.status(500).json({ message: error.message });
             }
         }
-
         export const submitImg = async (req, res) => {
             try {
                 console.log(req.file);
@@ -80,7 +78,6 @@ export const getUsuario = async (req, res) => {
                 if  (!regex.apellido.test(req.body.apellido)){
                     return res.status(400) .json({ error : "El apellido no es valido" });
                 }
-
                 if (!regex.correo.test(req.body.correo)){
                     return res.status(400) .json({ error : "El correo no es valido" });
                 }

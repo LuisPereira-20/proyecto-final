@@ -16,7 +16,8 @@ export const getCategorias = async (req, res) => {
 
 export const getCategoria = async (req, res) => {
     try {
-    const categoria = await Categorias.paginate({id : req.params.id, eliminado : false}, opciones);
+    const categoria = await Categorias.paginate({_id: req.params.id, eliminado : false}, opciones);
+    console.log(req.params.id);
     res.status(200).json(categoria);
 } catch (error) {
     console.log(error);
@@ -30,7 +31,7 @@ export const postCategoria = async (req, res) => {
             return res.status(400).json({ error : "El nombre no es valido" });
         }
         const Categoria = new Categorias(req.body);
-        await Categorias.save();
+        await Categoria.save();
         res.status(200).json(Categoria);
     } catch (error) {
         console.log(error);
@@ -56,8 +57,11 @@ export const editarCategoria = async (req, res) => {
 export const deleteCategoria = async (req, res) => {
     try{
         req.body.eliminado = true;
-        const Categoria = await Categorias.findByIdAndUpdate({ _id : req.params.id, eliminado : false}, {eliminado : true, fechaEliminacion : Date.now()}, {new : true});
-        const categoria_paginate = await Categorias.paginate({id : req.params.id, eliminado : false}, opciones);
+        const categories = await Categorias.findByIdAndUpdate({ _id : req.params.id, eliminado : false}, 
+            {eliminado : true, fechaEliminacion : Date.now()}, 
+            {new : true});
+        const categoria_paginate = await Categorias.paginate({id : categories.id, eliminado : false}, opciones);
+        console.log(categories.id);
         res.status(200).json(categoria_paginate);
     } catch (error) {
         console.log(error);

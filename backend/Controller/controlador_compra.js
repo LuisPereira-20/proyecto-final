@@ -27,7 +27,7 @@ export const postCompras = async (req, res) => {
     }
         const compra = new Compra(req.body);
             await compra.save();
-            const compra_paginate = await Compra.paginate({id : Compra._id, eliminado : false}, opciones);
+            const compra_paginate = await Compra.paginate({id : compra._id, eliminado : false}, opciones);
             res.status(200).json(compra_paginate);
     } catch (error) {
         res.status(400).json({ message: error.message });
