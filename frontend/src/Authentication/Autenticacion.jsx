@@ -114,8 +114,8 @@ const AutenticacionProvider = ({children}) => {
         guardarsession(Usuario.usuario , usuario.accessToken, usuario.refrescartoken);
     }
 
-    const usuario = () => {
-        return usuario;
+    const obtenerUsuario = () => {
+        return Usuario;
     }
 
     const cerrarSesion = async (refrescarToken) => {
@@ -149,7 +149,7 @@ const AutenticacionProvider = ({children}) => {
                 getAccessToken,
                 guardarUsuario,
                 cerrarSesion,
-                Usuario,
+                obtenerUsuario,
                 getRefreshToken
             }}
         >

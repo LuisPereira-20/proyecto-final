@@ -1,6 +1,6 @@
 import Compra from "../Model/Modelo_compra.js";
 import Usuario from "../Model/modelo_usuario.js";
-import producto from "../Model/Modelo_producto.js";
+import Producto from "../Model/Modelo_producto.js";
 import opciones from "../Tools/opciones.js";
 
 export const getCompras = async (req, res) => {
@@ -16,23 +16,29 @@ export const getCompras = async (req, res) => {
 }
 
 export const postCompras = async (req, res) => {
-    try{
+    try {
         const usuario = await Usuario.findById(req.body.usuario);
-        if(!usuario){
-            return res.status (404).json({error : "El usuario no existe"});
+        if (!usuario) {
+            return res.status(404).json({ error: "El usuario no existe" });
         }
-        const Producto = await chequeoProductos(req.body.producto);
-        if(Producto){
-            return res.status (404).json({error : "El producto no existe"});
-    }
+
+        const errorProductos = await chequeoProductos(req.body.productos); // Aquí productos en plural
+        if (errorProductos) {
+            return res.status(404).json({ error: errorProductos });
+        }
+
         const compra = new Compra(req.body);
-            await compra.save();
-            const compra_paginate = await Compra.paginate({id : compra._id, eliminado : false}, opciones);
-            res.status(200).json(compra_paginate);
+        await compra.save();
+
+        const opciones = {}; // Define tus opciones de paginación si es necesario
+        const compra_paginate = await Compra.paginate({ _id: compra._id, eliminado: false }, opciones);
+
+        res.status(200).json(compra_paginate);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
 }
+
 
 export const editarCompras = async (req, res) => {
     try{
@@ -62,17 +68,18 @@ export const borrarCompras = async (req, res) => {
 
 export const getComprasId = async (req, res) => {
     try {
-        const compras = await compra.paginate({_id: req.params.id, eliminado : false}, opciones);
+        const compras = await Compra.paginate({_id: req.params.id, eliminado : false}, opciones);
         res.json(compras);
     } catch (error) {
         res.status(404).json({ error: error.message });
     }
 }
 
-const chequeoProductos = async (array) => {
-    const soloIDs = array.map((obj) => obj._id);
-    const records = await producto.find({ '_id': { $in: soloIDs } });
+const chequeoProductos = async (productos) => { // Renombrado a productos
+    const soloIDs = productos.map((el) => el.idProducto); // Accede a idProducto
+    const records = await Producto.find({ '_id': { $in: soloIDs } }); // Asegúrate que la referencia a Producto es correcta
     if (!records.length || records.length !== soloIDs.length) {
-      return "Productos no encontrados, chequea el IDs";
+        return "Productos no encontrados, chequea los IDs";
     }
+    return null; // Retorna null si no hay error
 }

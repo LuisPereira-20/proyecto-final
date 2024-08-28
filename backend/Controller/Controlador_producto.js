@@ -17,7 +17,7 @@ export const getProductos = async (req, res) => {
 
 export const getProducto = async (req, res) => {
     try {
-    const Producto = await producto.paginate({id : req.params.id, eliminado : false}, opciones);
+    const Producto = await producto.paginate({_id : req.params.id, eliminado : false}, opciones);
     res.status(200).json(Producto);
 }  catch (error) {
     res.status(400).json({ message : error.message});

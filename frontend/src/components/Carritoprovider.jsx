@@ -56,10 +56,10 @@ const CarritoProvider = ({children}) => {
         <CarritoContext.Provider
             value={{
                 carrito,
-                anadirAlCarrito,
+                añadirAlCarrito,
                 quitardelCarrito,
                 vaciarCarrito,
-                anadirUsuario
+                añadirUsuario
             }}
         >
             {children}

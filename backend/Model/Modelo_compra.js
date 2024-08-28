@@ -18,14 +18,13 @@ const compraSchema = new Schema({
         ref : 'Usuario',
         required : true
     },
-    productos : {
-        type : [{_id : {type : Schema.Types.ObjectId, ref :'producto'},
-            cantidad : {type : Number, required : true, min : 0}
+    productos : [
+        {
+            idProducto : {type : Schema.Types.ObjectId, ref :'Producto'},
+            cantidad : {type : Number, required : true, min : 1},
+            subtotal : {type : Number, required : true, min : 1}
         }
-    ], 
-        ref :'producto', 
-        required : true
-    },
+    ],
     total : {
         type : Number,
         required : true,
@@ -33,7 +32,8 @@ const compraSchema = new Schema({
     },
     fechaCreacion : {
         type : Date,
-        default : Date.now
+        default : Date.now,
+        inmutable : true
     },
     fechaActualizacion : {
         type : Date,

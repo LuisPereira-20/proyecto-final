@@ -18,7 +18,7 @@ export const getUsuarios = async (req, res) => {
 
 export const getUsuario = async (req, res) => {
     try {
-        const usuario = await Usuario.paginate({id : req.params.id, eliminado : false}, opciones);
+        const usuario = await Usuario.paginate({_id : req.params.id, eliminado : false}, opciones);
         console.log(req.params.id);
         res.status(200).json(usuario);
     } catch (error) {
